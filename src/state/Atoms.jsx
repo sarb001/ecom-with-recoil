@@ -1,13 +1,15 @@
 import axios from "axios"
-import { atom, selectorFamily } from "recoil"
+import { atom, selector, selectorFamily } from "recoil"
 
 
-export const ApiSelectorFamily =  selectorFamily({
+export const ApiSelectorFamily =  selector({
         key : 'apiselectorFamily',
-        get : () => {
-            return async function(){
+        get : async () => {
+            try {
                 const res  = await axios.get('https://dummyjson.com/products');
                 return res.data.products;
+            } catch (error) {
+                 throw(error);
             }
         }
 })
@@ -23,27 +25,34 @@ export const SpecificProductSelectorFamily =  selectorFamily({
         }
 })
 
-export const ProductAtom = atom({
+export const ProductAtom = atom({           // simple ProductAtom 
         key : 'productatom',
         default : []
 })
 
-export const FilteredProductAtom = atom({
+export const FilteredProductAtom = selector({
         key : 'filteredproductatom',
-        default : ProductAtom
+        get : ({get}) => {
+            const products = get(ProductAtom);
+            console.log('get prod - ',products);
+            return products; 
+        }
 })
 
+                                                
 export const SelectCategoryFamily = atom({
     key : 'selectedcategory',
     default : ''
 })
 
-export const FilterCategoryFamily = selectorFamily({
+export const FilterCategoryFamily = selector({
     key : 'filterselector',
-    get : (category) => ({get}) => {
+    get : ({get}) => {
         const products = get(ProductAtom);
-        if(!products) return products;
-        return products.filter(x =>  x.category === category);
+        const SelectedCat = get(SelectCategoryFamily);
+
+        if(!SelectedCat) return products;
+        return products.filter(x =>  x.category === SelectedCat);
     }
 })
 
@@ -59,7 +68,7 @@ export const FilterCategoryFamily = selectorFamily({
 // Products 
 
 
-// -- ProductFilter --  fetch All prodp] apply changes here
+// -- ProductFilter --  fetch All products to apply changes here
 
 // -- Products -- fetch filterprod [] and the apply operation on atoms and  map over this in component 
 
