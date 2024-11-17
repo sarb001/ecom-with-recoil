@@ -1,5 +1,6 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { ApiSelectorFamily, FilterCategoryFamily, SelectCategoryFamily } from "../state/atoms";
+import { useState } from "react";
 
 
 export const FilterSection = () => {
@@ -23,6 +24,13 @@ export const FilterSection = () => {
         setSelectedCategory(category);
     }
 
+    const selectchange = (e) => {
+        console.log('target is -',e.target.value);
+        setValue(e.target.value);
+    }
+
+    const[Value,setValue] = useState(0);
+
     return (
         <>
        
@@ -41,7 +49,7 @@ export const FilterSection = () => {
 
          <div>
              <span> Search by Price  </span>
-              <input type = "range"  max={100} min = "10"  />
+              <input type = "range"  max="100" min = "0" value = {Value} onChange={(e) => selectchange(e)}  />
          </div>
 
         </>
