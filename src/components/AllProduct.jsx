@@ -13,7 +13,7 @@ export const Product = () => {
     
     return (
         <>
-        <div style = {{display:'grid',gridTemplateColumns:'2fr 7fr'}}>
+        <div style = {{display:'grid',gridTemplateColumns:'2fr 7fr',cursor:'pointer'}}>
             <div>
                 <FilterSection />
             </div>

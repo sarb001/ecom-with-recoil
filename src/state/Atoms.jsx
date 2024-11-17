@@ -39,7 +39,10 @@ export const FilteredProductAtom = selector({
         }
 })
 
-                                                
+                  
+// ---Category Filter
+
+
 export const SelectCategoryFamily = atom({
     key : 'selectedcategory',
     default : ''
@@ -57,21 +60,17 @@ export const FilterCategoryFamily = selector({
 })
 
 
+// --- Max Range Price--
+
+export const PriceRangeFamily = selectorFamily({
+     key : 'pricerangeselector',
+     get : (maxprice) => ({get}) => {
+        const products = get(ProductAtom);
+        console.log('maxprice =',maxprice);
+        console.log('prodcts range family =',products);
+        return  products.filter(prod => prod.price <= maxprice);  // <= 85
+     }
+})
 
 
-
-
-
-//1- 
-
-// ProductFilter
-// Products 
-
-
-// -- ProductFilter --  fetch All products to apply changes here
-
-// -- Products -- fetch filterprod [] and the apply operation on atoms and  map over this in component 
-
-
-
-
+// 0 - 100   85 

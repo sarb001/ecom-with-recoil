@@ -6,7 +6,7 @@ import { Header } from "./Header"
 export const Maincomponent = () => {
     return (
         <>
-         <div style = {{display:'flex',flexDirection:'column'}}>
+         <div style = {{display:'flex',flexDirection:'column',cursor:'pointer'}}>
             <AllPages />
 
         </div>
