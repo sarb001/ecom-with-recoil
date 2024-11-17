@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { ApiSelectorFamily, FilterCategoryFamily, PriceRangeFamily, SelectCategoryFamily } from "../state/atoms";
+import { ApiSelectorFamily, FilterCategoryFamily, FilterState, PriceRangeFamily, SelectCategoryFamily } from "../state/atoms";
 import { useState } from "react";
 
 
@@ -9,10 +9,10 @@ export const FilterSection = () => {
     console.log('list is -',ProductsList);
 
     const UniqueCategories  = Array.from(new Set(ProductsList?.map((x) => x.category )));
-    console.log('Unique Cat -',UniqueCategories);
+    // console.log('Unique Cat -',UniqueCategories);
 
     const UniquePrice       = Array.from(new Set(ProductsList?.map((x) => x.price.toFixed())));
-    console.log('Unique Prices -',UniquePrice);
+    // console.log('Unique Prices -',UniquePrice);
     
     const[SelectedCategory,setSelectedCategory] = useRecoilState(SelectCategoryFamily);
     console.log('selected category -',SelectedCategory);
@@ -36,10 +36,30 @@ export const FilterSection = () => {
     console.log('Price --',FilterByPrice);
 
 
+    // -----------------
+     const [newFilter,setnewFilter] = useRecoilState(FilterState);
+
+
+    const handleRangeFilter = (filtertype,min,max) => {
+        setnewFilter(prev => ({
+            ...prev,
+            [filtertype] : {min,max}      // rangefilter,0,400
+        }))
+    }
+
+    const handleCategoryFilter = (filtertype,category) => {
+        setnewFilter(prev => ({
+            ...prev,
+            [filtertype] : category         // catfilter , beauty
+        }))
+    }
+
+
+
     return (
         <>
        
-         <div style = {{padding:'5%'}}>
+         {/* <div style = {{padding:'5%'}}>
             <span> Search by Category </span>
              <div style = {{fontSize:'24px'}}>
                  {UniqueCategories.map((i,index) => {
@@ -50,15 +70,60 @@ export const FilterSection = () => {
                     )
                  })}
              </div>
+         </div> */}
+
+
+
+            {/* new update  */}
+
+            <div style = {{padding:'5%'}}>
+            <span> Search by Category </span>
+             <div style = {{fontSize:'24px'}}>
+                 {UniqueCategories.map((i,index) => {
+                    return (
+                        <div key = {index}>
+                         <div onClick={() => handleCategoryFilter('categories',i)}> {i} </div>
+                        </div>
+                    )
+                 })}
+             </div>
          </div>
 
-         <div>
+
+            {/* ------------- Price Range  */}
+        
+        <div>
+        <span> Search by Price  </span>
+            <input type = "range"  max="100" min = "0" 
+            value = {newFilter?.priceRange}
+             onChange = {(e) => handleRangeFilter('priceRange',0,Number(e.target.value))}  />
+              <div>
+               0 - {newFilter?.priceRange?.max}
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 {/* Price Range ----s */}
+
+         {/* <div>
              <span> Search by Price  </span>
               <input type = "range"  max="100" min = "0" value = {Value} onChange={(e) => selectchange(e)}  />
               <div>
                0 - {Value}
               </div>
-         </div>
+         </div> */}
 
         </>
     )

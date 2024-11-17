@@ -60,7 +60,68 @@ export const FilterCategoryFamily = selector({
 })
 
 
-// --- Max Range Price--
+// ---- Centralize Filter State 
+
+export const FilterState = atom({
+    key : 'filterstate',
+    default : {
+        categories : [],
+        priceRange : {
+            min : 0,
+            max : 100
+        }
+    }
+})
+
+
+const ApplyFilters = (products,filteredvalue) => {
+    return products.filter(prod =>  {
+        if(prod.category === filteredvalue.categories){
+            return true;
+        }
+
+        if(filteredvalue.priceRange.max >= prod.price.toFixed()){    
+            return true;
+        }
+
+    })
+}
+
+
+export const FilterProductSelector = selector({
+    key : 'FilterProductSelector',
+    get : ({get}) => {
+        const Allproducts = get(ProductAtom);
+        console.log('All Prod-',Allproducts);
+        
+        const Filterval = get(FilterState);
+        console.log(' Filterva -',Filterval);
+
+        const Filtered = ApplyFilters(Allproducts,Filterval);
+        console.log('After Filtering -',Filtered);
+
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // --- Max Range Price--
 
 export const PriceRangeFamily = selectorFamily({
      key : 'pricerangeselector',
@@ -73,4 +134,4 @@ export const PriceRangeFamily = selectorFamily({
 })
 
 
-// 0 - 100   85 
+// // 0 - 100   85 
