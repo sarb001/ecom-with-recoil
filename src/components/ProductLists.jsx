@@ -9,26 +9,20 @@ export const ProductLists = () => {
     const ProductsList = useRecoilValue(ApiSelectorFamily);
     const [Prod,setProd] = useRecoilState(ProductAtom);
     
-    const FilteredProducts = useRecoilValue(FilterCategoryFamily);
-
-    // const FinalPriced =   useRecoilValue(PriceRangeFamily);
-    // console.log('Filtered by Price -',FinalPriced);
-
           useEffect(() => {
             setProd(ProductsList);
          },[ProductsList,setProd]); 
 
-    const FilteredProd = useRecoilValue(FilterProductSelector);
-    console.log('Prod ---',FilteredProd);
-
+    const FilteredProducts = useRecoilValue(FilterProductSelector);
+    console.log('Prod ---',FilteredProducts);
 
     return (
         <>
            {FilteredProducts?.map(item => {
             return (
-                <>
+                <div key = {item?.id}>
                   <ProductCard product = {item} />
-                </>
+                </div>
             )
            })}
         </>

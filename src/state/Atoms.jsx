@@ -73,16 +73,19 @@ export const FilterState = atom({
     }
 })
 
+    // allproducts , default values 
+const ApplyFilters = (products,filters) => {
+    // applying both 
+    return products.filter(product =>  {
 
-const ApplyFilters = (products,filteredvalue) => {
-    return products.filter(prod =>  {
-        if(prod.category === filteredvalue.categories){
-            return true;
+        if(filters.categories.length){
+            const CategoryMatch =  product.category === filters.categories;
+            return CategoryMatch;
         }
 
-        if(filteredvalue.priceRange.max >= prod.price.toFixed()){    
-            return true;
-        }
+        const PriceMatch = filters.priceRange.max >= product.price.toFixed();
+
+        return PriceMatch;
 
     })
 }
@@ -99,7 +102,7 @@ export const FilterProductSelector = selector({
 
         const Filtered = ApplyFilters(Allproducts,Filterval);
         console.log('After Filtering -',Filtered);
-
+        return Filtered;
     }
 })
 

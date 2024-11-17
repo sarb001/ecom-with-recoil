@@ -58,25 +58,9 @@ export const FilterSection = () => {
 
     return (
         <>
-       
-         {/* <div style = {{padding:'5%'}}>
-            <span> Search by Category </span>
-             <div style = {{fontSize:'24px'}}>
-                 {UniqueCategories.map((i,index) => {
-                    return (
-                        <div key = {index}>
-                         <div onClick={() => handleclick(i)}> {i} </div>
-                        </div>
-                    )
-                 })}
-             </div>
-         </div> */}
-
-
-
             {/* new update  */}
 
-            <div style = {{padding:'5%'}}>
+        <div style = {{padding:'5%'}}>
             <span> Search by Category </span>
              <div style = {{fontSize:'24px'}}>
                  {UniqueCategories.map((i,index) => {
@@ -94,36 +78,13 @@ export const FilterSection = () => {
         
         <div>
         <span> Search by Price  </span>
-            <input type = "range"  max="100" min = "0" 
-            value = {newFilter?.priceRange}
+            <input type = "range"  max="500" min = "0" 
+            value = {newFilter?.priceRange.max}
              onChange = {(e) => handleRangeFilter('priceRange',0,Number(e.target.value))}  />
               <div>
                0 - {newFilter?.priceRange?.max}
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                 {/* Price Range ----s */}
-
-         {/* <div>
-             <span> Search by Price  </span>
-              <input type = "range"  max="100" min = "0" value = {Value} onChange={(e) => selectchange(e)}  />
-              <div>
-               0 - {Value}
-              </div>
-         </div> */}
 
         </>
     )
